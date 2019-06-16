@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="271.0" prefWidth="329.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="capstone.control.AddEventController">
+   <children>
+      <TextField fx:id="titleField" layoutX="61.0" layoutY="50.0" prefHeight="26.0" prefWidth="207.0" promptText="Event Title" />
+      <DatePicker fx:id="dateField" layoutX="60.0" layoutY="108.0" prefHeight="26.0" prefWidth="207.0" />
+      <TextField fx:id="capacityField" layoutX="60.0" layoutY="165.0" prefHeight="26.0" prefWidth="112.0" promptText="Max Capacity" />
+      <Button fx:id="cancelButton" layoutX="244.0" layoutY="231.0" mnemonicParsing="false" onAction="#cancelBtnPressed" prefHeight="26.0" prefWidth="74.0" text="Cancel" />
+      <Button fx:id="addButton" layoutX="165.0" layoutY="231.0" mnemonicParsing="false" onAction="#addBtnPressed" prefHeight="26.0" prefWidth="73.0" text="Add" />
+   </children>
+</AnchorPane>

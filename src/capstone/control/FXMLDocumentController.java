@@ -5,12 +5,19 @@
  */
 package capstone.control;
 
+import capstone.model.DBDriver;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.Parent;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  *
@@ -18,18 +25,53 @@ import javafx.scene.control.Label;
  */
 public class FXMLDocumentController implements Initializable {
     
-    @FXML
-    private Label label;
-    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    @FXML TableView eventTable;
+    @FXML TableColumn idColumn;
+    @FXML TableColumn titleColumn;
+    @FXML TableColumn dateColumn;
+    @FXML TableColumn capacityColumn;
+    @FXML MenuItem addEventItem, editeEventItem, generateMapItem, addTicketItem;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        populateEventTable();
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("eventId"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateColumn.setSortType(TableColumn.SortType.ASCENDING);
+        capacityColumn.setCellValueFactory(new PropertyValueFactory<>("ticketCount"));
+        eventTable.getSortOrder().add(dateColumn);
+        
+        
+    }
+    
+    public void populateEventTable(){
+        eventTable.setItems(FXCollections.observableArrayList(DBDriver.getAllEvents()));
+        eventTable.getSortOrder().add(dateColumn);
+    }
+    
+    @FXML
+    public void addEvent() throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/capstone/view/AddEvent.fxml"));
+        Capstone.showNewScene(root, "Add Event");
+        populateEventTable();
+    }
+    
+    @FXML
+    public void editEvent(){
+
+    }
+    
+    @FXML
+    public void generateMap(){
+
+    }
+    
+    @FXML
+    public void addTickets(){
+
+    }
+    
+    
     
 }

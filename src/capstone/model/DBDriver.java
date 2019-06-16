@@ -9,6 +9,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  *
@@ -81,6 +82,45 @@ public class DBDriver {
             System.out.println(e);
         }
         return -1;
+    }
+    
+    public static ArrayList<BusinessEvent> getAllEvents(){
+        String query = "SELECT * FROM events";
+        ArrayList<BusinessEvent> toReturn = new ArrayList();
+        try(Connection conn = DBDriver.connect()){
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()){
+                int id = rs.getInt("event_id");
+                String title = rs.getString("title");
+                LocalDate date = LocalDate.parse(rs.getString("event_date"));
+                int maxCap = rs.getInt("max_capacity");
+                toReturn.add(new BusinessEvent(id, title, date, maxCap));
+            }
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return toReturn;
+    }
+    
+    public static int getTicketSalesForEvent(int eventId){
+        String query = "SELECT count(ticket_id) from tickets t\n" +
+                        "JOIN events e\n" +
+                        "ON t.event_id = e.event_id\n" +
+                        "GROUP BY e.event_id\n" +
+                        "HAVING e.event_id = ?;";
+        int toReturn = 0;
+        try(Connection conn = DBDriver.connect();
+                PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setInt(1, eventId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                toReturn = rs.getInt("count(ticket_id)");
+            }
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return toReturn;
     }
     
 //    public static String getEvent(int eventId){

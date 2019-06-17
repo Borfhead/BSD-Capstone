@@ -60,9 +60,16 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    public void editEvent(){
+    public void editEvent() throws IOException{
         if(eventTable.getSelectionModel().getSelectedItem() == null){
             Capstone.makeAlert("Please select an event to edit.");
+        }
+        else{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/capstone/view/EditEvent.fxml"));
+            Parent root = loader.load();
+            loader.<EditEventController>getController().initEvent((BusinessEvent)eventTable.getSelectionModel().getSelectedItem());
+            Capstone.showNewScene(root, "Edit Event");
+            populateEventTable();
         }
     }
     

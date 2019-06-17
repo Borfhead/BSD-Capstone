@@ -169,21 +169,26 @@ public class DBDriver {
         return toReturn;
     }
     
-//    public static String getEvent(int eventId){
-//        String query = "SELECT event_date FROM events WHERE event_id = ?";
-//        try(Connection conn = DBDriver.connect();
-//                PreparedStatement stmt = conn.prepareStatement(query)){
-//            stmt.setInt(1, eventId);
-//            ResultSet rs = stmt.executeQuery();
-//            while(rs.next()){
-//                return(rs.getString("event_date"));
-//            }
-//        }
-//        catch(SQLException e){
-//            System.out.println(e);
-//        }
-//        return "";
-//    }
+    public static boolean updateEvent(int id, String title, LocalDate date, int maxCap){
+        String query = "UPDATE events \n"
+                        + "SET title = ?, \n"
+                        + "event_date = ?, \n"
+                        + "max_capacity = ? \n"
+                        + "WHERE event_id = ?;";
+        try(Connection conn = DBDriver.connect();
+                PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setString(1, title);
+            stmt.setString(2, Date.valueOf(date).toString());
+            stmt.setInt(3, maxCap);
+            stmt.setInt(4, id);
+            stmt.executeUpdate();
+            return true;
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        return false;
+    }
     
     
 }

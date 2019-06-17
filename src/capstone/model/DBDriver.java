@@ -84,6 +84,52 @@ public class DBDriver {
         return -1;
     }
     
+    public static ArrayList<Customer> getAllCustomers(){
+        String query = "SELECT * FROM customers";
+        ArrayList<Customer> toReturn = new ArrayList();
+        try(Connection conn = DBDriver.connect()){
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()){
+                int id = rs.getInt("customer_id");
+                String fname = rs.getString("first_name");
+                String lname = rs.getString("last_name");
+                String email = rs.getString("email");
+                toReturn.add(new Customer(id, fname, lname, email));
+            }
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return toReturn;
+    }
+    
+    public static ArrayList<Customer> broadCustomerSearch(String search){
+        String query = "select * from customers \n" +
+                        "where customer_id = ? \n" +
+                        "or first_name like ? \n" +
+                        "or last_name like ?\n" +
+                        "or email like ?;";
+        int index = -10;
+        ArrayList<Customer> toReturn = new ArrayList();
+        try(Connection conn = DBDriver.connect(); PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setString(1, search);
+            stmt.setString(2, "%" +search+ "%");
+            stmt.setString(3, "%" +search+ "%");
+            stmt.setString(4, "%" +search+ "%");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("customer_id");
+                String fname = rs.getString("first_name");
+                String lname = rs.getString("last_name");
+                String email = rs.getString("email");
+                toReturn.add(new Customer(id, fname, lname, email));
+            }
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return toReturn;
+    }
+    
     public static ArrayList<BusinessEvent> getAllEvents(){
         String query = "SELECT * FROM events";
         ArrayList<BusinessEvent> toReturn = new ArrayList();

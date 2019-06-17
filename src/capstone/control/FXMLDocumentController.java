@@ -5,6 +5,8 @@
  */
 package capstone.control;
 
+import capstone.model.BusinessEvent;
+import capstone.model.Customer;
 import capstone.model.DBDriver;
 import java.io.IOException;
 import java.net.URL;
@@ -59,7 +61,9 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     public void editEvent(){
-
+        if(eventTable.getSelectionModel().getSelectedItem() == null){
+            Capstone.makeAlert("Please select an event to edit.");
+        }
     }
     
     @FXML
@@ -68,8 +72,17 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    public void addTickets(){
-
+    public void addTickets() throws IOException{
+        if(eventTable.getSelectionModel().getSelectedItem() == null){
+            Capstone.makeAlert("Please select an event to add ticket sales to.");
+        }
+        else{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/capstone/view/AddTickets.fxml"));
+            Parent root = loader.load();
+            loader.<AddTicketsController>getController().initEvent((BusinessEvent)eventTable.getSelectionModel().getSelectedItem());
+            Capstone.showNewScene(root, "Add Tickets");
+            populateEventTable();
+        }
     }
     
     

@@ -5,11 +5,7 @@
  */
 package capstone.control;
 
-import capstone.model.BusinessEvent;
-import capstone.model.Customer;
-import capstone.model.DBDriver;
-import java.time.LocalDate;
-import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;

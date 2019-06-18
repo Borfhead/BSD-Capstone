@@ -74,8 +74,16 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    public void generateMap(){
-
+    public void generateMap() throws IOException{
+        if(eventTable.getSelectionModel().getSelectedItem() == null){
+            Capstone.makeAlert("Please select an event to generate a map.");
+        }
+        else{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/capstone/view/GenerateMap.fxml"));
+            Parent root = loader.load();
+            loader.<GenerateMapController>getController().initEvent((BusinessEvent)eventTable.getSelectionModel().getSelectedItem());
+            Capstone.showNewScene(root, "Generate Map");
+        }
     }
     
     @FXML

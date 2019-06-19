@@ -13,6 +13,7 @@ public class Ticket {
     private int ticketId;
     private int customerId;
     private int eventId;
+    private char tableChar;
     
     public Ticket(){
         ticketId = -1;
@@ -20,10 +21,11 @@ public class Ticket {
         eventId = -1;
     }
     
-    public Ticket(int ticketId, int customerId, int eventId){
+    public Ticket(int ticketId, int customerId, int eventId, char tableChar){
         this.ticketId = ticketId;
         this.customerId = customerId;
         this.eventId = eventId;
+        this.tableChar = tableChar;
     }
 
     public int getTicketId() {

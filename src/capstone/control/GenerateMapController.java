@@ -6,11 +6,13 @@
 package capstone.control;
 
 import capstone.model.BusinessEvent;
+import static capstone.model.DBDriver.getTicketsPerTable;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -41,7 +43,17 @@ public class GenerateMapController implements Initializable {
                 c.setText(String.valueOf(letters[count]));
                 count++;
                 tablePane.add(c, j, i);
+                c.setVisible(false);
             }
+        }
+        
+        Map<Character, Integer> seats = getTicketsPerTable(e.getEventId());
+        Iterator iter = seats.entrySet().iterator();
+        int count2 = 0;
+        while(iter.hasNext()){
+            Map.Entry pair = (Map.Entry)iter.next();
+            tablePane.getChildren().get(count2).setVisible(true);
+            count2++;
         }
         
     }

@@ -10,6 +10,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -67,21 +70,44 @@ public class DBDriver {
         return -1;
     }
     
-    public static int insertTicket(int custId, int eventId){
-        String query = "INSERT INTO tickets(customer_id, event_id) "
-                + "VALUES(?, ?)";
+    public static ArrayList<Integer> insertTickets(int custId, int eventId, int numTickets){
+        String query = "INSERT INTO tickets(customer_id, event_id, table_char) "
+                + "VALUES(?, ?, ?)";
+        Map<Character, Integer> seats = getTicketsPerTable(eventId);
+        Iterator iter = seats.entrySet().iterator();
+        char tableChar = 'A';
+        while(iter.hasNext()){
+            Map.Entry pair = (Map.Entry)iter.next();
+            if(numTickets + (int)pair.getValue() <= 8){
+                tableChar = (char)pair.getKey();
+                break;
+            }
+            else{
+                tableChar = (char)((char)pair.getKey() + 1);
+            }
+        }
+        if(tableChar == 'U'){
+            return null;
+        }
+        
+        ArrayList<Integer> toReturn = new ArrayList();
         try(Connection conn = DBDriver.connect();
-                PreparedStatement stmt = conn.prepareStatement(query)){
-            stmt.setInt(1, custId);
-            stmt.setInt(2, eventId);
+            PreparedStatement stmt = conn.prepareStatement(query)){
+        stmt.setInt(1, custId);
+        stmt.setInt(2, eventId);
+        stmt.setString(3, String.valueOf(tableChar));
+        for(int i = numTickets; i > 0; i--){
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
-            return rs.getInt(1);
+            toReturn.add(rs.getInt(1));
+        }
+
         }
         catch(SQLException e){
             System.out.println(e);
         }
-        return -1;
+        
+        return toReturn;
     }
     
     public static ArrayList<Customer> getAllCustomers(){
@@ -166,6 +192,29 @@ public class DBDriver {
         }catch(SQLException e){
             System.out.println(e);
         }
+        return toReturn;
+    }
+    
+    public static Map<Character, Integer> getTicketsPerTable(int eventId){
+        String query = "select table_char, count(ticket_id) num_tickets\n" +
+                        "from tickets\n" +
+                        "where event_id = ? \n" +
+                        "group by table_char;";
+        Map<Character, Integer> toReturn = new HashMap<>();
+        try(Connection conn = DBDriver.connect();
+                PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setInt(1, eventId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                char c = rs.getString("table_char").charAt(0);
+                int numTickets = rs.getInt("num_tickets");
+                toReturn.put(c, numTickets);
+            }
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        
+        
         return toReturn;
     }
     

@@ -37,11 +37,14 @@ public class AddTicketsFinalController implements Initializable {
             Capstone.makeAlert("Please enter number between 1 and 8");
         }
         else{
-            for(int i = 0; i < num; i++){
-                DBDriver.insertTicket(cust.getCustId(), event.getEventId());
+            if(DBDriver.insertTickets(cust.getCustId(), event.getEventId(), num) == null){
+                Capstone.makeAlert("Not enough seats available");
+                cancelBtnPressed();
             }
-            Capstone.makePosAlert("Ticket(s) added.");
-            cancelBtnPressed();
+            else{
+                Capstone.makePosAlert("Ticket(s) added.");
+                cancelBtnPressed();
+            }
         }
         
     }

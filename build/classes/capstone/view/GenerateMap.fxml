@@ -7,12 +7,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="935.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.control.GenerateMapController">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="949.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.control.GenerateMapController">
    <children>
-      <TableView layoutX="653.0" layoutY="14.0" prefHeight="631.0" prefWidth="267.0">
+      <TableView fx:id="infoTable" layoutX="653.0" layoutY="14.0" prefHeight="631.0" prefWidth="291.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="customerCol" prefWidth="140.800048828125" text="Last Name" />
+          <TableColumn fx:id="tableCol" prefWidth="61.5999755859375" text="Table" />
+            <TableColumn fx:id="ticketCol" prefWidth="86.39990234375" text="Ticket Amt" />
         </columns>
       </TableView>
       <GridPane fx:id="tablePane" layoutX="14.0" layoutY="14.0" prefHeight="631.0" prefWidth="633.0">

@@ -213,8 +213,30 @@ public class DBDriver {
         }catch(SQLException e){
             System.out.println(e);
         }
-        
-        
+        return toReturn;
+    }
+    
+    public static ArrayList<TableUtil> getTicketsPerCustomerByEvent(int eventId){
+        String query = "select c.last_name, t.table_char, count(ticket_id) num\n" +
+                        "from tickets t, customers c\n" +
+                        "where c.customer_id = t.customer_id\n" +
+                        "and t.event_id = ? \n" +
+                        "group by c.last_name;";
+        ArrayList<TableUtil> toReturn = new ArrayList();
+        try(Connection conn = DBDriver.connect();
+                PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setInt(1, eventId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                String lname = rs.getString("last_name");
+                String tchar = rs.getString("table_char");
+                int num = rs.getInt("num");
+                TableUtil util = new TableUtil(lname, tchar, num);
+                toReturn.add(util);
+            }
+        }catch(SQLException e){
+            System.out.println(e);
+        }
         return toReturn;
     }
     

@@ -6,13 +6,18 @@
 package capstone.control;
 
 import capstone.model.BusinessEvent;
+import capstone.model.DBDriver;
 import static capstone.model.DBDriver.getTicketsPerTable;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -26,6 +31,8 @@ public class GenerateMapController implements Initializable {
     BusinessEvent event;
     @FXML AnchorPane mainPane;
     @FXML GridPane tablePane;
+    @FXML TableColumn customerCol, tableCol, ticketCol;
+    @FXML TableView infoTable;
     String l = "ABCDEFGHIJKLMNOPQRST";
     char[] letters = l.toCharArray();
     
@@ -55,6 +62,10 @@ public class GenerateMapController implements Initializable {
             tablePane.getChildren().get(count2).setVisible(true);
             count2++;
         }
+        infoTable.setItems(FXCollections.observableArrayList(DBDriver.getTicketsPerCustomerByEvent(e.getEventId())));
+        customerCol.setCellValueFactory(new PropertyValueFactory<>("custName"));
+        tableCol.setCellValueFactory(new PropertyValueFactory<>("tableChar"));
+        ticketCol.setCellValueFactory(new PropertyValueFactory<>("ticketNum"));
         
     }
     

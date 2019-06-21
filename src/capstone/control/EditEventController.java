@@ -70,4 +70,9 @@ public class EditEventController implements Initializable {
         Stage s = (Stage)titleField.getScene().getWindow();
         s.close();
     }
+    
+    public void deleteEvent(){
+        DBDriver.deleteEvent(event.getEventId());
+        cancelBtnPressed();
+    }
 }

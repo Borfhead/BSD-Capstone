@@ -175,6 +175,25 @@ public class DBDriver {
         return toReturn;
     }
     
+    public static BusinessEvent getEvent(int eventId){
+        String query = "SELECT * FROM events WHERE event_id = ?;";
+        BusinessEvent toReturn = new BusinessEvent();
+        try(Connection conn = DBDriver.connect(); PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setInt(1, eventId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("event_id");
+                String title = rs.getString("title");
+                LocalDate date = LocalDate.parse(rs.getString("event_date"));
+                int maxCap = rs.getInt("max_capacity");
+                toReturn = new BusinessEvent(id, title, date, maxCap);
+            }
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return toReturn;
+    }
+    
     public static int getTicketSalesForEvent(int eventId){
         String query = "SELECT count(ticket_id) from tickets t\n" +
                         "JOIN events e\n" +
@@ -259,6 +278,19 @@ public class DBDriver {
             System.out.println(e);
         }
         return false;
+    }
+    
+    public static void deleteEvent(int eventId){
+        String query = "DELETE from events \n"
+                        + "WHERE event_id = ?;";
+        try(Connection conn = DBDriver.connect();
+                PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setInt(1, eventId);
+            stmt.executeUpdate();
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
     }
     
     

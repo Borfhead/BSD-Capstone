@@ -12,5 +12,6 @@
       <TextField fx:id="capacityField" layoutX="60.0" layoutY="165.0" prefHeight="26.0" prefWidth="112.0" promptText="Max Capacity" />
       <Button fx:id="cancelButton" layoutX="244.0" layoutY="231.0" mnemonicParsing="false" onAction="#cancelBtnPressed" prefHeight="26.0" prefWidth="74.0" text="Cancel" />
       <Button fx:id="addButton" layoutX="165.0" layoutY="231.0" mnemonicParsing="false" onAction="#addBtnPressed" prefHeight="26.0" prefWidth="73.0" text="Save" />
+      <Button fx:id="deleteBtn" layoutX="14.0" layoutY="232.0" mnemonicParsing="false" onAction="#deleteEvent" text="Delete" textFill="#ff0303" />
    </children>
 </AnchorPane>

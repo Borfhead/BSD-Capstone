@@ -41,6 +41,12 @@ public class GenerateMapController implements Initializable {
         
     }
     
+    /**
+     * Allows the previous window to indicated which event is selected by the
+     * user. Populates map up to current limit of 20 tables in
+     * 5x4 rows and columns.
+     * @param e 
+     */
     public void initEvent(BusinessEvent e){
         event = e;
         int count = 0;

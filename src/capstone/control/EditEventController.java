@@ -32,6 +32,11 @@ public class EditEventController implements Initializable {
         Capstone.addIntListener(capacityField);
     }    
     
+    /**
+     * Allows the previous window to indicate which event is selected by the
+     * user. Populates the text fields based on event information.
+     * @param event 
+     */
     public void initEvent(BusinessEvent event){
         this.event = event;
         titleField.setText(event.getTitle());
@@ -39,6 +44,10 @@ public class EditEventController implements Initializable {
         capacityField.setText(Integer.toString(event.getMaxCapacity()));
     }
     
+    /**
+     * Called when the add button is pressed. If all fields are filled, updates
+     * the existing event record in the database.
+     */
     public void addBtnPressed(){
         if(titleField.getText().equals("")){
             Capstone.makeAlert("Please enter a title.");
@@ -66,11 +75,17 @@ public class EditEventController implements Initializable {
         }
     }
     
+    /**
+     * Closes the window.
+     */
     public void cancelBtnPressed(){
         Stage s = (Stage)titleField.getScene().getWindow();
         s.close();
     }
     
+    /**
+     * Deletes the selectee event from the database.
+     */
     public void deleteEvent(){
         DBDriver.deleteEvent(event.getEventId());
         cancelBtnPressed();

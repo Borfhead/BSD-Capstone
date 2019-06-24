@@ -6,7 +6,7 @@
 package capstone.model;
 
 /**
- *
+ * Represents the customer of an event. 
  * @author Dylan
  */
 public class Customer {

@@ -14,7 +14,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 /**
- *
+ * Class represents physical round-shaped dining tables for use in generating
+ * a seating chart. This particular class of table fits 8 seats.
  * @author Dylan
  */
 public class CircleTable extends AnchorPane{
@@ -46,18 +47,35 @@ public class CircleTable extends AnchorPane{
         
     }
     
+    /**
+     * Sets the text within the center of the table.
+     * @param text 
+     */
     public void setText(String text){
         tableText.setText(text);
     }
     
+    /**
+     * Gets the text at the center of the table
+     * @return 
+     */
     public String getText(){
         return tableText.getText();
     }
     
+    /**
+     * Returns an array of Text objects representing seat numbers.
+     * @return 
+     */
     public ArrayList<Text> getSeats(){
         return seats;
     }
     
+    /**
+     * Allows the return of the Circle object if properties of the circle are 
+     * desired, e.g, background color.
+     * @return The Circle Object.
+     */
     public Circle getCircle(){
         return tableCircle;
     }

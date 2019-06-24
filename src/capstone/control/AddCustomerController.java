@@ -28,6 +28,10 @@ public class AddCustomerController implements Initializable {
         // TODO
     }
     
+    /**
+     * Function called when the add button is pressed. Ensures that all fields
+     * are filled in, then inserts to database.
+     **/
     @FXML
     public void addBtnPressed(){
         if(firstNameField.getText().equals("")){
@@ -49,6 +53,9 @@ public class AddCustomerController implements Initializable {
         }
     }
     
+    /**
+     * Closes the current window.
+     */
     @FXML
     public void cancelBtnPressed(){
         Stage s = (Stage)emailField.getScene().getWindow();

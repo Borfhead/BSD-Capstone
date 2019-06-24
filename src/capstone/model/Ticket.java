@@ -6,7 +6,7 @@
 package capstone.model;
 
 /**
- *
+ * Represents tickets purchased by customers for seats at an event.
  * @author Dylan
  */
 public class Ticket {

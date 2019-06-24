@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,7 +33,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML TableColumn titleColumn;
     @FXML TableColumn dateColumn;
     @FXML TableColumn capacityColumn;
-    @FXML MenuItem addEventItem, editeEventItem, generateMapItem, addTicketItem;
+    @FXML Menu adminMenu;
+    @FXML MenuItem addEventItem, editeEventItem, generateMapItem,
+            addTicketItem, createUserItem;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -43,8 +46,6 @@ public class FXMLDocumentController implements Initializable {
         dateColumn.setSortType(TableColumn.SortType.ASCENDING);
         capacityColumn.setCellValueFactory(new PropertyValueFactory<>("ticketCount"));
         eventTable.getSortOrder().add(dateColumn);
-        
-        
     }
     
     public void populateEventTable(){
@@ -97,6 +98,18 @@ public class FXMLDocumentController implements Initializable {
             loader.<AddTicketsController>getController().initEvent((BusinessEvent)eventTable.getSelectionModel().getSelectedItem());
             Capstone.showNewScene(root, "Add Tickets");
             populateEventTable();
+        }
+    }
+    
+    @FXML
+    public void createUser() throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/capstone/view/CreateUser.fxml"));
+        Capstone.showNewScene(root, "Create User");
+    }
+    
+    public void initUserType(String type){
+        if(type.equals("admin")){
+            adminMenu.setVisible(true);
         }
     }
     

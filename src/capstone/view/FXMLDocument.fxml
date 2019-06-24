@@ -21,6 +21,11 @@
                   <MenuItem fx:id="addTicketItem" mnemonicParsing="false" onAction="#addTickets" text="Add Ticket Sales" />
               </items>
             </Menu>
+            <Menu fx:id="adminMenu" mnemonicParsing="false" text="Admin" visible="false">
+              <items>
+                <MenuItem fx:id="createUserItem" mnemonicParsing="false" onAction="#createUser" text="Create User" />
+              </items>
+            </Menu>
          </menus>
       </MenuBar>
       <TableView fx:id="eventTable" layoutX="2.0" layoutY="32.0" prefHeight="525.0" prefWidth="622.0">

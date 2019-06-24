@@ -31,6 +31,10 @@ public class AddTicketsFinalController implements Initializable {
         Capstone.addIntListener(numField);
     }
     
+    /**
+     * Function called when the add button is pressed. Currently supports 8
+     * tickets per customer per event.
+     **/
     public void addBtnPressed(){
         int num = Integer.parseInt(numField.getText());
         if(num > 8 || num < 1){
@@ -49,11 +53,20 @@ public class AddTicketsFinalController implements Initializable {
         
     }
     
+    /**
+     * Closes the current window.
+     */
     public void cancelBtnPressed(){
         Stage s = (Stage)numField.getScene().getWindow();
         s.close();
     }
     
+    /**
+     * Method to allow initialization of variables based on selection in the
+     * previous window.
+     * @param e Event that the tickets will be added to
+     * @param c Customer that the tickets will be added to
+     */
     public void initValues(BusinessEvent e, Customer c){
         this.event = e;
         this.cust = c;

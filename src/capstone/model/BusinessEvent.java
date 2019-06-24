@@ -10,7 +10,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- *
+ * Represents the event that the institution will hold.  Events have a title,
+ * event date, and maximum capacity.  The StringProperty ticketCount is for
+ * populating a TableView with data based on an aggregated query.
  * @author Dylan
  */
 public class BusinessEvent {

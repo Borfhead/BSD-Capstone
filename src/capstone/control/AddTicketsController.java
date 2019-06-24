@@ -37,6 +37,11 @@ public class AddTicketsController implements Initializable {
     @FXML TableView customerTable;
     BusinessEvent event;
     
+    /**
+     * Populates the customer table with data.  Sets appropriate property values
+     * for each column in the table.  Adds a listener on the search field that
+     * updates the table with each keystroke.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateCustomerTable();
@@ -55,20 +60,38 @@ public class AddTicketsController implements Initializable {
     });
     }
     
+    /**
+     * Resets the customer table with updated data.
+     */
     public void populateCustomerTable(){
         customerTable.setItems(FXCollections.observableArrayList(DBDriver.getAllCustomers()));
     }
     
+    /**
+     * Filters the data within the customer table to only show data that matches
+     * a search string.
+     * @param search String to filter customer data within the table.
+     */
     public void filterCustomerTable(String search){
         customerTable.setItems(FXCollections.observableArrayList(DBDriver.broadCustomerSearch(search)));
     }
     
+    /**
+     * Opens new dialogue that allows the user to add a customer.
+     * @throws IOException 
+     */
     public void addCustomerBtnPressed() throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/capstone/view/AddCustomer.fxml"));
         Capstone.showNewScene(root, "Add Customer");
         populateCustomerTable();
     }
     
+    /**
+     * When a customer is selected in the table, a new dialogue will open,
+     * initializing a value for the selected customer to pass data to the new 
+     * window.
+     * @throws IOException 
+     */
     public void addTicketBtnPressed() throws IOException{
         if(customerTable.getSelectionModel().getSelectedItem() == null){
             Capstone.makeAlert("Please select a customer");
@@ -82,10 +105,18 @@ public class AddTicketsController implements Initializable {
         }
     }
     
+    /**
+     * Allows the previous window to pass data regarding the selected event
+     * to this window.
+     * @param e The event that has been selected.
+     */
     public void initEvent(BusinessEvent e){
         this.event = e;
     }
     
+    /**
+     * Closes the window.
+     */
     public void cancelBtnPressed(){
         Stage s = (Stage)searchField.getScene().getWindow();
         s.close();

@@ -6,7 +6,10 @@
 package capstone.model;
 
 /**
- *
+ * Class created for presenting data within a TableView. The data provided is
+ * based on aggregated/joined queries from the database that don't belong to any
+ * one class. Properties are customer name, the name of the table, and the
+ * amount of tickets the customer has purchased at that table.
  * @author Dylan
  */
 public class TableUtil {
